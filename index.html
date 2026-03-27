@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forex Trading by Hansraj Saini</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+}
+
+/* Sections */
+.section {
+    display: none;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Active Section */
+.active {
+    display: block;
+}
+
+/* Button */
+.btn {
+    padding: 10px 20px;
+    background: #22c55e;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+/* Card */
+.card {
+    background: #1e293b;
+    padding: 20px;
+    margin: 15px;
+    border-radius: 10px;
+}
+
+/* Input */
+input {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+/* Animation */
+.fade {
+    animation: fade 1s;
+}
+
+@keyframes fade {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+</style>
+
+</head>
+<body>
+
+<!-- HOME -->
+<div id="home" class="section active fade">
+    <h1>Forex Trading</h1>
+    <p>By Hansraj Saini</p>
+    <button class="btn" onclick="showSection('login')">Login</button>
+</div>
+
+<!-- LOGIN -->
+<div id="login" class="section fade">
+    <h2>Login</h2>
+    <input type="text" id="user" placeholder="Username"><br>
+    <input type="password" id="pass" placeholder="Password"><br>
+    <button class="btn" onclick="login()">Login</button>
+    <p id="msg"></p>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="section fade">
+    <h2>Welcome Trader 🔥</h2>
+
+    <div class="card">
+        <h3>Free Content</h3>
+        <p>Basic Forex Learning Available</p>
+    </div>
+
+    <div class="card">
+        <h3>Paid Course</h3>
+        <p id="courseStatus">Locked 🔒</p>
+        <button class="btn" onclick="buyCourse()">Buy Course ₹499</button>
+    </div>
+
+    <div class="card" id="premium" style="display:none;">
+        <h3>Premium Content 🔥</h3>
+        <p>SMC Strategy, Signals & Advanced Setup</p>
+    </div>
+
+    <button class="btn" onclick="logout()">Logout</button>
+</div>
+
+<script>
+
+// Section Switch
+function showSection(id) {
+    document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+}
+
+// Login System
+function login() {
+    let user = document.getElementById("user").value;
+    let pass = document.getElementById("pass").value;
+
+    if(user === "admin" && pass === "1234") {
+        localStorage.setItem("login", "true");
+        showSection("dashboard");
+        checkCourse();
+    } else {
+        document.getElementById("msg").innerText = "Wrong Login ❌";
+    }
+}
+
+// Logout
+function logout() {
+    localStorage.removeItem("login");
+    showSection("home");
+}
+
+// Buy Course
+function buyCourse() {
+    alert("Payment Successful ✅");
+    localStorage.setItem("paid", "true");
+    checkCourse();
+}
+
+// Check Course Access
+function checkCourse() {
+    if(localStorage.getItem("paid") === "true") {
+        document.getElementById("courseStatus").innerText = "Unlocked ✅";
+        document.getElementById("premium").style.display = "block";
+    }
+}
+
+// Auto Login
+if(localStorage.getItem("login") === "true") {
+    showSection("dashboard");
+    checkCourse();
+}
+
+</script>
+
+</body>
+      </html>
